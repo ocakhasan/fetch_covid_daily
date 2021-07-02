@@ -18,7 +18,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
         with:
-          - token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+          token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
 
       - name: Run Go Code
         run: go run .
