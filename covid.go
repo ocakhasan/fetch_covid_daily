@@ -1,12 +1,12 @@
 package main
 
 import (
-	"encoding/csv"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -24,18 +24,20 @@ type CovidDataUnit struct {
 	Date      time.Time
 }
 
-func (c *CovidDataUnit) getHeaders() []string {
-	return []string{"Country", "Confirmed", "Deaths", "Recovered", "Active", "Date"}
+func (c *CovidDataUnit) getHeaders() string {
+	return strings.Join([]string{"Country", "Confirmed", "Deaths", "Recovered", "Active", "Date"}, ",")
 }
 
-func (c *CovidDataUnit) getDataArray() []string {
-	return []string{c.Country,
-		strconv.Itoa(c.Confirmed),
-		strconv.Itoa(c.Deaths),
-		strconv.Itoa(c.Recovered),
-		strconv.Itoa(c.Active),
-		c.Date.String(),
-	}
+func (c *CovidDataUnit) getDataArray() string {
+
+	return strings.Join(
+		[]string{c.Country,
+			strconv.Itoa(c.Confirmed),
+			strconv.Itoa(c.Deaths),
+			strconv.Itoa(c.Recovered),
+			strconv.Itoa(c.Active),
+			c.Date.String(),
+		}, ",")
 }
 
 type CovidData []CovidDataUnit
@@ -66,19 +68,18 @@ func FetchCovidData() error {
 
 	defer file.Close()
 
-	csvWriter := csv.NewWriter(file)
-
 	for i, line := range covidData {
 		if i == 0 {
-			err := csvWriter.Write(line.getHeaders())
+			_, err := fmt.Fprintf(file, "%s\n", line.getHeaders())
 			if err != nil {
 				return fmt.Errorf("error while writing data headers :%v\n", err)
 			}
 		}
-		err := csvWriter.Write(line.getDataArray())
+		_, err := fmt.Fprintf(file, "%s\n", line.getDataArray())
 		if err != nil {
 			return fmt.Errorf("error while writing data array :%v\n", err)
 		}
+		fmt.Println(i, line)
 	}
 	fmt.Printf("Write to %s successfully\n", fileName)
 	return nil

@@ -29,4 +29,4 @@ jobs:
             d="$(date --rfc-3339=s)"
             git add .
             git commit  -m "Periodic update: $d"
-            git push origin master
+            git push origin HEAD:master
