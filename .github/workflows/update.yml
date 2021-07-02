@@ -16,8 +16,8 @@ jobs:
           go-version: 1.15
 
       - uses: actions/checkout@v2
-      with:
-        ref: ${{ github.head_ref }}
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Check out code
         uses: actions/checkout@v1
