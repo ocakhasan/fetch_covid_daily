@@ -15,16 +15,18 @@ jobs:
         with:
           go-version: 1.15
 
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.head_ref }}
-
       - name: Check out code
         uses: actions/checkout@v1
 
       - name: Run Go Code
         run: go run .
 
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: daily update
+      - name: Commit results
+        run: |
+            set -e
+            git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "github-actions[bot]"
+            d="$(date --rfc-3339=s)"
+            git add .
+            git commit  -m "Periodic update: $d"
+            git push origin master
