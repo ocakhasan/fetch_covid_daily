@@ -16,7 +16,9 @@ jobs:
           go-version: 1.15
 
       - name: Check out code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
+        with:
+          - token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
 
       - name: Run Go Code
         run: go run .
@@ -29,4 +31,4 @@ jobs:
             d="$(date --rfc-3339=s)"
             git add .
             git commit  -m "Periodic update: $d"
-            git push origin HEAD:master
+            git push origin master

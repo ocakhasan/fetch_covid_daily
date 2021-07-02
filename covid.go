@@ -79,7 +79,6 @@ func FetchCovidData() error {
 		if err != nil {
 			return fmt.Errorf("error while writing data array :%v\n", err)
 		}
-		fmt.Println(i, line)
 	}
 	fmt.Printf("Write to %s successfully\n", fileName)
 	return nil
