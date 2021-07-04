@@ -4,7 +4,7 @@ on:
     branches:
       - master
   schedule:
-    - cron:  '00 19 * * *'
+    - cron: "00 7,19 * * *"
 jobs:
   covid:
     name: Covid
@@ -23,10 +23,10 @@ jobs:
 
       - name: Commit results
         run: |
-            set -e
-            git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git config --global user.name "github-actions[bot]"
-            d="$(date --rfc-3339=s)"
-            git add .
-            git commit  -m "Periodic update: $d"
-            git push origin master
+          set -e
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          d="$(date --rfc-3339=s)"
+          git add .
+          git commit  -m "Periodic update: $d"
+          git push origin master
