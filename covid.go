@@ -75,11 +75,14 @@ func FetchCovidData() error {
 				return fmt.Errorf("error while writing data headers :%v\n", err)
 			}
 		}
-		_, err := fmt.Fprintf(file, "%s\n", line.getDataArray())
-		if err != nil {
-			return fmt.Errorf("error while writing data array :%v\n", err)
+		if i != len(covidData)-1 {
+			_, err := fmt.Fprintf(file, "%s\n", line.getDataArray())
+			if err != nil {
+				return fmt.Errorf("error while writing data array :%v\n", err)
+			}
 		}
 	}
+
 	fmt.Printf("Write to %s successfully\n", fileName)
 	return nil
 }
