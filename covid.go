@@ -7,7 +7,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 )
 
 const (
@@ -21,7 +20,7 @@ type CovidDataUnit struct {
 	Deaths    int
 	Recovered int
 	Active    int
-	Date      time.Time
+	Date      string
 }
 
 func (c *CovidDataUnit) getHeaders() string {
@@ -36,7 +35,7 @@ func (c *CovidDataUnit) getDataArray() string {
 			strconv.Itoa(c.Deaths),
 			strconv.Itoa(c.Recovered),
 			strconv.Itoa(c.Active),
-			c.Date.String(),
+			c.Date,
 		}, ",")
 }
 
@@ -72,13 +71,13 @@ func FetchCovidData() error {
 		if i == 0 {
 			_, err := fmt.Fprintf(file, "%s\n", line.getHeaders())
 			if err != nil {
-				return fmt.Errorf("error while writing data headers :%v\n", err)
+				return fmt.Errorf("error while writing data headers :%v", err)
 			}
 		}
 		if i != len(covidData)-1 {
 			_, err := fmt.Fprintf(file, "%s\n", line.getDataArray())
 			if err != nil {
-				return fmt.Errorf("error while writing data array :%v\n", err)
+				return fmt.Errorf("error while writing data array :%v", err)
 			}
 		}
 	}
