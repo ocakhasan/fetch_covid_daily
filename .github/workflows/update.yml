@@ -26,7 +26,7 @@ jobs:
           set -e
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-          git pull origin master
+          d="$(date --rfc-3339=s)"
           git add .
-          git commit --amend --no-edit
+          git commit --allow-empty -m "Periodic update: $d"
           git push origin master
